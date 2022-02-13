@@ -1,5 +1,6 @@
 package ru.netology.manager;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
@@ -9,22 +10,20 @@ import ru.netology.repository.ProductRepository;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductManagerTest {
-    @Test
-    public void shouldSearchInNotBookOrSmartphone(){
-        ProductRepository repository = new ProductRepository();
+    private ProductRepository repository = new ProductRepository();
+    private ProductManager manager = new ProductManager(repository);
 
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-        Product laptop = new Product(8, "LenovoFil 3000", 400_000_000);
+    // create products
+    private Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
+    private Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
+    private Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
+    private Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
+    private Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
+    private Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
+    private Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
 
-        // save product
-        ProductManager manager = new ProductManager(repository);
+    @BeforeEach
+    public void sutUp() {
         manager.addProduct(physic);
         manager.addProduct(basePsychology);
         manager.addProduct(worldHistory);
@@ -32,6 +31,14 @@ class ProductManagerTest {
         manager.addProduct(apple213ProMaxUltra);
         manager.addProduct(xiaomiReadme500NoteMinus);
         manager.addProduct(realMeWithFairyTailScreen);
+
+    }
+
+    @Test
+    public void shouldSearchInNotBookOrSmartphone(){
+
+        Product laptop = new Product(8, "LenovoFil 3000", 400_000_000);
+
         manager.addProduct(laptop);
 
         // comparing results
@@ -54,26 +61,6 @@ class ProductManagerTest {
 
     @Test
     public void shouldSearchByManufacturer(){
-        ProductRepository repository = new ProductRepository();
-
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-
-        // save product
-        ProductManager manager = new ProductManager(repository);
-        manager.addProduct(physic);
-        manager.addProduct(basePsychology);
-        manager.addProduct(worldHistory);
-        manager.addProduct(samsungS20SuperSurprise);
-        manager.addProduct(apple213ProMaxUltra);
-        manager.addProduct(xiaomiReadme500NoteMinus);
-        manager.addProduct(realMeWithFairyTailScreen);
 
         // comparing results
         Product[] expected = {samsungS20SuperSurprise, apple213ProMaxUltra, xiaomiReadme500NoteMinus, realMeWithFairyTailScreen};
@@ -83,26 +70,6 @@ class ProductManagerTest {
 
     @Test
     public void shouldNotSearchByManufacturer(){
-        ProductRepository repository = new ProductRepository();
-
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-
-        // save product
-        ProductManager manager = new ProductManager(repository);
-        manager.addProduct(physic);
-        manager.addProduct(basePsychology);
-        manager.addProduct(worldHistory);
-        manager.addProduct(samsungS20SuperSurprise);
-        manager.addProduct(apple213ProMaxUltra);
-        manager.addProduct(xiaomiReadme500NoteMinus);
-        manager.addProduct(realMeWithFairyTailScreen);
 
         // comparing results
         Product[] expected = {};
@@ -112,26 +79,6 @@ class ProductManagerTest {
 
     @Test
     public void shouldNotSearchByAuthor(){
-        ProductRepository repository = new ProductRepository();
-
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-
-        // save product
-        ProductManager manager = new ProductManager(repository);
-        manager.addProduct(physic);
-        manager.addProduct(basePsychology);
-        manager.addProduct(worldHistory);
-        manager.addProduct(samsungS20SuperSurprise);
-        manager.addProduct(apple213ProMaxUltra);
-        manager.addProduct(xiaomiReadme500NoteMinus);
-        manager.addProduct(realMeWithFairyTailScreen);
 
         // comparing results
         Product[] expected = {};
@@ -141,26 +88,6 @@ class ProductManagerTest {
 
     @Test
     public void shouldSearchByAuthor(){
-        ProductRepository repository = new ProductRepository();
-
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-
-        // save product
-        ProductManager manager = new ProductManager(repository);
-        manager.addProduct(physic);
-        manager.addProduct(basePsychology);
-        manager.addProduct(worldHistory);
-        manager.addProduct(samsungS20SuperSurprise);
-        manager.addProduct(apple213ProMaxUltra);
-        manager.addProduct(xiaomiReadme500NoteMinus);
-        manager.addProduct(realMeWithFairyTailScreen);
 
         // comparing results
         Product[] expected = {worldHistory};
@@ -170,26 +97,6 @@ class ProductManagerTest {
 
     @Test
     public void shouldSearchSmartphoneByName(){
-        ProductRepository repository = new ProductRepository();
-
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-
-        // save product
-        ProductManager manager = new ProductManager(repository);
-        manager.addProduct(physic);
-        manager.addProduct(basePsychology);
-        manager.addProduct(worldHistory);
-        manager.addProduct(samsungS20SuperSurprise);
-        manager.addProduct(apple213ProMaxUltra);
-        manager.addProduct(xiaomiReadme500NoteMinus);
-        manager.addProduct(realMeWithFairyTailScreen);
 
         // comparing results
         Product[] expected = {realMeWithFairyTailScreen};
@@ -198,26 +105,6 @@ class ProductManagerTest {
     }
     @Test
     public void shouldSearchBookByName(){
-        ProductRepository repository = new ProductRepository();
-
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-
-        // save product
-        ProductManager manager = new ProductManager(repository);
-        manager.addProduct(physic);
-        manager.addProduct(basePsychology);
-        manager.addProduct(worldHistory);
-        manager.addProduct(samsungS20SuperSurprise);
-        manager.addProduct(apple213ProMaxUltra);
-        manager.addProduct(xiaomiReadme500NoteMinus);
-        manager.addProduct(realMeWithFairyTailScreen);
 
         // comparing results
         Product[] expected = {physic};
@@ -227,31 +114,12 @@ class ProductManagerTest {
 
     @Test
     public void shouldNotSearchByName(){
-        ProductRepository repository = new ProductRepository();
-
-        // create products
-        Product physic = new Book(1, "Физика, 9 класс", 300, "Пёрышкин");
-        Product basePsychology = new Book(2, "Основы психологии", 600, "Сеченов");
-        Product worldHistory = new Book(3, "всеобщая история, 9 класс", 400, "Маэстро Евгений");
-        Product samsungS20SuperSurprise = new Smartphone(4, "samsungS20SuperSurprise", 15_000_000, "Китай");
-        Product apple213ProMaxUltra = new Smartphone(5, "apple213ProMaxUltra", 150_000_0000, "Китай");
-        Product xiaomiReadme500NoteMinus = new Smartphone(6, "xiaomiReadme500NoteMinus", 151_000_000, "Китай");
-        Product realMeWithFairyTailScreen = new Smartphone(7, "realMeWithFairyTailScreen", 152_000_000, "Китай");
-
-        // save product
-        ProductManager manager = new ProductManager(repository);
-        manager.addProduct(physic);
-        manager.addProduct(basePsychology);
-        manager.addProduct(worldHistory);
-        manager.addProduct(samsungS20SuperSurprise);
-        manager.addProduct(apple213ProMaxUltra);
-        manager.addProduct(xiaomiReadme500NoteMinus);
-        manager.addProduct(realMeWithFairyTailScreen);
 
         // comparing results
         Product[] expected = {};
-        assertArrayEquals (expected, manager.searchBy("Abra Cadabra and the magic Stick"));
+        Product[] actual = manager.searchBy("Abra Cadabra and the magic Stick");
+        assertArrayEquals (expected, actual);
 
-        
+
     }
 }
